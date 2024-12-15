@@ -19,6 +19,7 @@ public class Day3 extends Day {
 
         printPart1(String.valueOf(result1));
 
+
         Pattern omniPattern = Pattern.compile("(mul\\((?<first>\\d{1,3}),(?<second>\\d{1,3})\\))|(do\\(\\))|(don't\\(\\))");
         Matcher omniMatcher = omniPattern.matcher(data);
         List<MatchResult> matches = omniMatcher.results().toList();
@@ -28,26 +29,19 @@ public class Day3 extends Day {
         for (MatchResult match : matches) {
             String instruction = match.group().split("\\(")[0];
             switch (instruction) {
-                case "mul": {
+                case "mul" -> {
                     if (isEnabled) {
                         int first = Integer.parseInt(match.group("first"));
                         int second = Integer.parseInt(match.group("second"));
                         result2 += first * second;
                     }
-                    break;
                 }
-
-                case "do":
-                    isEnabled = true;
-                    break;
-
-                case "don't":
-                    isEnabled = false;
-                    break;
+                case "do" -> isEnabled = true;
+                case "don't" -> isEnabled = false;
+                default -> throw new RuntimeException("unknown instruction processed: \"" + instruction + "\"");
             }
         }
 
         printPart2(String.valueOf(result2));
-
     }
 }
